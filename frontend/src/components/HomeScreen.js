@@ -33,17 +33,18 @@ const MapComponent = ({ userLocation }) => {
   };
 
   const Block = ({ onClick }) => {
-    // const handleClick = () => {
-    //   // Assuming you have a specific position for this block
-    //   const blockPosition = { lat: 30.2850, lng: -97.7335 };
-    //   onClick(blockPosition);
+    const handleClick = () => {
+      // Assuming you have a specific position for this block
+      const blockPosition = { lat: 30.2850, lng: -97.7335 };
+      onClick(blockPosition);
+    };
 
     return (
       <div style={blockStyle}>
         <p>Content for Block goes here...</p>
       </div>
     );
-    
+  
 
   }
   
@@ -52,7 +53,7 @@ const MapComponent = ({ userLocation }) => {
       <div style={sidebarStyle}>
         <h2>Sidebar</h2>
         <Block onClick={centerMapOnMarker} />
-        <Block/>
+        {/* <Block/>
         <Block/>
         <Block/>
         <Block/>
@@ -65,7 +66,7 @@ const MapComponent = ({ userLocation }) => {
         <Block/>
         <Block/>
         <Block/>
-        <Block/>
+        <Block/> */}
 
       </div>
       <LoadScript googleMapsApiKey="AIzaSyCCaE3R5a3E5V1Wcmh9UBsSbKzFFOxBB74">
