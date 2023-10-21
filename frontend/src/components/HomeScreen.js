@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, MarkerF, InfoWindowF } from '@react-google-maps/api';
 
 const containerStyle = {
   width: '100%',
@@ -63,13 +63,13 @@ const Block = () => {
           center={userLocation}
           zoom={20}
         >
-          <Marker
+          <MarkerF
             position={userLocation}
             onClick={() => onMarkerClick(userLocation)}
           />
 
           {selectedMarker && (
-            <InfoWindow
+            <InfoWindowF
               position={selectedMarker}
               onCloseClick={() => setSelectedMarker(null)}
             >
@@ -77,7 +77,7 @@ const Block = () => {
                 <h3>Marker Info</h3>
                 <p>Additional information about the marker.</p>
               </div>
-            </InfoWindow>
+            </InfoWindowF>
           )}
         </GoogleMap>
       </LoadScript>
