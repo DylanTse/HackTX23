@@ -46,12 +46,12 @@ const MapComponent = ({ userLocation }) => {
     };
 
     return (
-      <div style={blockStyle}>
-        <p>Content for Block goes here...</p>
-      </div>
+      
+      <button type="button" onClick={handleClick}>
+      this location
+    </button>
     );
   
-
   }
   
   return (
