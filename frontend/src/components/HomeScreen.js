@@ -7,6 +7,7 @@ const containerStyle = {
   display: 'flex',
   width: '100%',
   height: '83vh',
+};
 
 const markerStyle = {
   width: "40vh",
@@ -88,7 +89,6 @@ const MapComponent = ({ userLocation, handleReviewClick, showReviewWindow }) => 
             </div>
             </InfoWindowF>
           )}
-
           {showReviewWindow && (
             <InfoWindowF
               position={userLocation}
@@ -96,14 +96,9 @@ const MapComponent = ({ userLocation, handleReviewClick, showReviewWindow }) => 
             >
               <div style={markerStyle}>
                 <h2>New Loo</h2>
-                <input type="text"></input>
-              <InfoWindowF
-                position={selectedMarker}
-                onCloseClick={() => setSelectedMarker(null)}
-              >
-              <div style ={markerStyle}>
-                <h3>Marker Info</h3>
-                <p>Additional information about the marker.</p>
+                <input className="input" type="text"
+                  placeholder="Location"
+                />
 
               </div>
             </InfoWindowF>
