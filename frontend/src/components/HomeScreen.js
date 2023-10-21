@@ -29,41 +29,25 @@ const MapComponent = ({ userLocation, handleReviewClick, showReviewWindow }) => 
     }
   };
 
-  const Block = ({ onClick }) => {
+  const Block = ({ onClick, userLocation }) => {
     const handleClick = () => {
       // Assuming you have a specific position for this block
       const blockPosition = { lat: 30.2850, lng: -97.7335 };
-      onClick(blockPosition);
+      onClick(userLocation);
     };
 
     return (
-      <div class ="blockStyle">
-        <p>Content for Block goes here...</p>
-      </div>
+      <button type="button" onClick={handleClick}>
+      this location
+    </button>
     );
-  
-
   }
   
   return (
     <div style={{ display: 'flex' }}>
       <div class = "sidebarStyle">
         <h2>Sidebar</h2>
-        <Block onClick={centerMapOnMarker} />
-        <Block/>
-        <Block/>
-        <Block/>
-        <Block/>
-        <Block/>
-        <Block/>       
-        <Block/>
-        <Block/>
-        <Block/>
-        <Block/>        
-        <Block/>
-        <Block/>
-        <Block/>
-        <Block/>
+        <Block onClick={centerMapOnMarker} userLocation={userLocation}/>
 
       </div>
       <LoadScript googleMapsApiKey="AIzaSyCCaE3R5a3E5V1Wcmh9UBsSbKzFFOxBB74">
