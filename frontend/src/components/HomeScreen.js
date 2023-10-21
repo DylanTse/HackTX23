@@ -18,6 +18,12 @@ const blockStyle = {
   height: '10vh',
 };
 
+const markerStyle = {
+  width: '40vh',
+  height: '60vh',
+};
+
+
 const MapComponent = ({ userLocation }) => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [map, setMap] = useState(null);
@@ -82,15 +88,15 @@ const MapComponent = ({ userLocation }) => {
           />
 
           {selectedMarker && (
-            <InfoWindowF
-              position={selectedMarker}
-              onCloseClick={() => setSelectedMarker(null)}
-            >
-              <div>
+              <InfoWindowF
+                position={selectedMarker}
+                onCloseClick={() => setSelectedMarker(null)}
+              >
+              <div style={markerStyle}>
                 <h3>Marker Info</h3>
                 <p>Additional information about the marker.</p>
               </div>
-            </InfoWindowF>
+              </InfoWindowF>
           )}
         </GoogleMap>
       </LoadScript>
@@ -113,8 +119,11 @@ function HomeScreen() {
   }, []);
 
   return (
-    <div className="App">
-      <h1>LAVISH LOO</h1>
+    <div class="App">
+      <div class="navbar">
+        <h1>ROYAL FLUSH</h1>
+        <button class='ReviewBtn'>Review a Loo</button>  
+      </div>
       <MapComponent userLocation={userLocation} />
     </div>
   );
