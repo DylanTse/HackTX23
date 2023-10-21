@@ -1,4 +1,19 @@
+.navbar {
+    margin: 0;
+    
+}
+
 .ReviewBtn {
-    flex: 1;
-    float: left;
+    border-color: #e070e0;
+    color: black;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: medium;
+    transition-duration: 0.4s;
+}
+.ReviewBtn:hover {
+    background-color: #e070e0;
+    color: white;
+    padding-left: 1.5%;
+    padding-right: 1.5%;
 }

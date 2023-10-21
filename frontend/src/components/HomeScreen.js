@@ -113,9 +113,11 @@ function HomeScreen() {
   }, []);
 
   return (
-    <div className="App">
-      <h1>LAVISH LOO</h1>
-      <button className='ReviewBtn'>Review a Loo</button>  
+    <div class="App">
+      <div class="navbar">
+        <h1>ROYAL FLUSH</h1>
+        <button class='ReviewBtn'>Review a Loo</button>  
+      </div>
       <MapComponent userLocation={userLocation} />
     </div>
   );
