@@ -114,6 +114,7 @@ function HomeScreen() {
   return (
     <div className="App">
       <h1>LAVISH LOO</h1>
+      <button className='ReviewBtn'>Review a Loo</button>  
       <MapComponent userLocation={userLocation} />
     </div>
   );
