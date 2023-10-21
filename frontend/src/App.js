@@ -8,7 +8,7 @@ const center = {
 
 const containerStyle = {
   width: '100%', // This will make the map container take up 100% of its parent element's width.
-  height: '100vh', // This will set the height to 50% of the viewport height.
+  height: '90vh', // This will set the height to 50% of the viewport height.
 };
 
 const MapComponent = () => {
