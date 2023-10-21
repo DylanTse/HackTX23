@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import { GoogleMap, LoadScript, MarkerF} from '@react-google-maps/api';
-
+import { GoogleMap, LoadScript, MarkerF, InfoWindowF } from '@react-google-maps/api';
 
 const containerStyle = {
-  width: '100%', // This will make the map container take up 100% of its parent element's width.
-  height: '90vh', // This will set the height to 50% of the viewport height.
+  width: '100%',
+  height: '90vh',
 };
 
-const MapComponent = ({userLocation}) => {
+const MapComponent = ({ userLocation }) => {
+  const [selectedMarker, setSelectedMarker] = useState(null);
+
+  const onMarkerClick = (marker) => {
+    setSelectedMarker(marker);
+  };
+
   return (
     <LoadScript googleMapsApiKey="AIzaSyCCaE3R5a3E5V1Wcmh9UBsSbKzFFOxBB74">
       <GoogleMap
@@ -16,7 +21,22 @@ const MapComponent = ({userLocation}) => {
         center={userLocation}
         zoom={20}
       >
-        <MarkerF position={userLocation} />
+        <MarkerF
+          position={userLocation}
+          onClick={() => onMarkerClick(userLocation)}
+        />
+
+        {selectedMarker && (
+          <InfoWindowF
+            position={selectedMarker}
+            onCloseClick={() => setSelectedMarker(null)}
+          >
+            <div>
+              <h3>Marker Info</h3>
+              <p>Additional information about the marker.</p>
+            </div>
+          </InfoWindowF>
+        )}
       </GoogleMap>
     </LoadScript>
   )
@@ -24,7 +44,6 @@ const MapComponent = ({userLocation}) => {
 
 function App() {
   const [userLocation, setUserLocation] = useState({lat: 0, lng: 0});
-
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       const {latitude, longitude} = position.coords;
@@ -34,10 +53,11 @@ function App() {
     });
   }, []);
 
+
   return (
     <div className="App">
       <h1>LAVISH LOO</h1>
-      <MapComponent userLocation={userLocation}/>
+      <MapComponent userLocation={userLocation} />
     </div>
   );
 }
