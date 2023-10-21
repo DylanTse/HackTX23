@@ -7,22 +7,10 @@ const containerStyle = {
   display: 'flex',
   width: '100%',
   height: '83vh',
-};
-
-const sidebarStyle = {
-  width: '25%', // Adjust the width of the sidebar as needed
-  height: '83vh',
-  overflowY: 'auto', // Enable vertical scrolling
-  background: '#f0f0f0', // Added for better visibility
-};
-
-const blockStyle = {
-  height: '10vh',
-};
 
 const markerStyle = {
-  width: '40vh',
-  height: '60vh',
+  width: "40vh",
+  height: "60vh"
 };
 
 
@@ -48,7 +36,7 @@ const MapComponent = ({ userLocation, handleReviewClick, showReviewWindow }) => 
     };
 
     return (
-      <div style={blockStyle}>
+      <div class ="blockStyle">
         <p>Content for Block goes here...</p>
       </div>
     );
@@ -58,10 +46,23 @@ const MapComponent = ({ userLocation, handleReviewClick, showReviewWindow }) => 
   
   return (
     <div style={{ display: 'flex' }}>
-      <div style={sidebarStyle}>
+      <div class = "sidebarStyle">
         <h2>Sidebar</h2>
         <Block onClick={centerMapOnMarker} />
-
+        <Block/>
+        <Block/>
+        <Block/>
+        <Block/>
+        <Block/>
+        <Block/>       
+        <Block/>
+        <Block/>
+        <Block/>
+        <Block/>        
+        <Block/>
+        <Block/>
+        <Block/>
+        <Block/>
 
       </div>
       <LoadScript googleMapsApiKey="AIzaSyCCaE3R5a3E5V1Wcmh9UBsSbKzFFOxBB74">
@@ -96,6 +97,14 @@ const MapComponent = ({ userLocation, handleReviewClick, showReviewWindow }) => 
               <div style={markerStyle}>
                 <h2>New Loo</h2>
                 <input type="text"></input>
+              <InfoWindowF
+                position={selectedMarker}
+                onCloseClick={() => setSelectedMarker(null)}
+              >
+              <div style ={markerStyle}>
+                <h3>Marker Info</h3>
+                <p>Additional information about the marker.</p>
+
               </div>
             </InfoWindowF>
           )}
