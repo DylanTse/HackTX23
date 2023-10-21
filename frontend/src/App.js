@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, MarkerF} from '@react-google-maps/api';
 
 
 const containerStyle = {
@@ -14,8 +14,10 @@ const MapComponent = ({userLocation}) => {
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={userLocation}
-        zoom={15}
-      />
+        zoom={20}
+      >
+        <MarkerF position={userLocation} />
+      </GoogleMap>
     </LoadScript>
   )
 }
