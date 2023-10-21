@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { GoogleMap, LoadScript, MarkerF} from '@react-google-maps/api';
-
+import { useNavigate } from "react-router-dom";
 
 const containerStyle = {
   width: '100%', // This will make the map container take up 100% of its parent element's width.
@@ -24,6 +24,10 @@ const MapComponent = ({userLocation}) => {
 
 function App() {
   const [userLocation, setUserLocation] = useState({lat: 0, lng: 0});
+  const navigate = useNavigate();
+  const router = createBrowserRouter([
+    {path: "/", element: <Home />}
+  ])
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -37,6 +41,7 @@ function App() {
   return (
     <div className="App">
       <h1>LAVISH LOO</h1>
+      <button className='addBtn'>Add</button>
       <MapComponent userLocation={userLocation}/>
     </div>
   );
