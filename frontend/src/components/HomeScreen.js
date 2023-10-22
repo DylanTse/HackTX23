@@ -167,7 +167,7 @@ function HomeScreen() {
     <div class="App">
       <div class="navbar">
         <h1 style={{ display: 'inline-block', marginRight: '10px' }}>ROYAL FLUSH</h1>
-        <button class='ReviewBtn' onClick={handleReviewClick} style={{ position: 'absolute', right: '0', marginTop:'1.8%', marginRight:'1.8%' }}>New Loo Review</button>  
+        <button class='ReviewBtn' onClick={handleReviewClick} style={{ position: 'absolute', right: '0', marginTop:'1.5%', marginRight:'2%' }}>New Loo Review</button>  
       </div>
       <MapComponent userLocation={userLocation} handleReviewClick={handleReviewClick} showReviewWindow={showReviewWindow}/>
     </div>
