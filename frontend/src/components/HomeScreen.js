@@ -84,11 +84,11 @@ const MapComponent = ({ userLocation, handleReviewClick, showReviewWindow }) => 
   
   return (
     <div style={{ display: 'flex' }}>
-      <div class = "sidebarStyle">
+      {/* <div class = "sidebarStyle">
         <h2>Sidebar</h2>
         <Block onClick={centerMapOnMarker} userLocation={userLocation}/>
 
-      </div>
+      </div> */}
       <LoadScript googleMapsApiKey="AIzaSyCCaE3R5a3E5V1Wcmh9UBsSbKzFFOxBB74">
         <GoogleMap
           mapContainerStyle={containerStyle}
