@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { GoogleMap, LoadScript, MarkerF, InfoWindowF } from '@react-google-maps/api';
-import { getFirestore, collection } from 'firebase/firestore';
+import { getFirestore, collection,  doc, getDoc, getDocs} from 'firebase/firestore';
 import { initializeApp } from "firebase/app";
 import Review from './Review';
+import { firebaseConfig, app, db } from "./firebaseConfig";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAXG6lMYjUOsRDKpY718P74PCGJ9Cg0ik4",
-  authDomain: "dbhacktx23.firebaseapp.com",
-  projectId: "dbhacktx23",
-  storageBucket: "dbhacktx23.appspot.com",
-  messagingSenderId: "429684702980",
-  appId: "1:429684702980:web:9d2540488174701db19a51"
-};
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+
+// const app = initializeApp(firebaseConfig);
+// const db = getFirestore(app);
 
 
 const containerStyle = {
@@ -28,7 +22,38 @@ const markerStyle = {
 };
 
 
+
 const MapComponent = ({ userLocation, handleReviewClick, showReviewWindow }) => {
+
+  const [toiletData, setToiletData] = useState(null);
+  const [documentList, setDocumentList] = useState([]);
+
+  useEffect(() => {
+    const fetchToiletData = async () => {
+      // const db = getFirestore();
+      // const toiletDocRef = doc(db, "reviews", "5qGBqJ0hoH1HxWyesWmN");
+
+      // try {
+      //   const docSnapshot = await getDoc(toiletDocRef);
+      //   if (docSnapshot.exists()) {
+      //     setToiletData(docSnapshot.data());
+      //   } else {
+      //     console.log("No such document!");
+      //   }
+      // } catch (e) {
+      //   console.error("Error getting document:", e);
+      // }
+          // Retrieve a list of documents
+          const querySnapshot = await getDocs(collection(db, 'reviews'));
+          const documents = [];
+          querySnapshot.forEach((doc) => {
+            documents.push({ id: doc.id, data: doc.data() });
+          });
+          setDocumentList(documents);
+        };
+    fetchToiletData();
+  }, []);
+  
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [map, setMap] = useState(null);
 
@@ -76,6 +101,17 @@ const MapComponent = ({ userLocation, handleReviewClick, showReviewWindow }) => 
             onClick={() => onMarkerClick(userLocation)}
           />
 
+{documentList.map((document) => {
+  const documentData = document.data;
+  return (
+    <MarkerF
+      key={document.id} // Make sure to include a unique key for each element in the list
+      position={documentData.coords.userLocation}
+      onClick={() => onMarkerClick(documentData.coords.userLocation)}
+    />
+  );
+})}
+
           {selectedMarker && (
             <InfoWindowF
               position={selectedMarker}
@@ -107,6 +143,7 @@ const MapComponent = ({ userLocation, handleReviewClick, showReviewWindow }) => 
 
 
 function HomeScreen() {
+
   const [userLocation, setUserLocation] = useState({ lat: 0, lng: 0 });
   const [showReviewWindow, setShowReviewWindow] = useState(false);
 
@@ -129,8 +166,8 @@ function HomeScreen() {
   return (
     <div class="App">
       <div class="navbar">
-        <h1>ROYAL FLUSH</h1>
-        <button class='ReviewBtn' onClick={handleReviewClick}>New Loo Review</button>  
+        <h1 style={{ display: 'inline-block', marginRight: '10px' }}>ROYAL FLUSH</h1>
+        <button class='ReviewBtn' onClick={handleReviewClick} style={{ position: 'absolute', right: '0', marginTop:'1.8%', marginRight:'1.8%' }}>New Loo Review</button>  
       </div>
       <MapComponent userLocation={userLocation} handleReviewClick={handleReviewClick} showReviewWindow={showReviewWindow}/>
     </div>

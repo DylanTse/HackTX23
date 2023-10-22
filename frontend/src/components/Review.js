@@ -1,23 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { firebaseConfig, db, app } from "./firebaseConfig";
+import { getFirestore, collection, addDoc, doc, getDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, listAll } from 'firebase/storage';
 import {v4} from 'uuid'; 
+import toiletImage from './toilet.jpg';
 
 
 // Firebase creds + init
-const firebaseConfig = {
-    apiKey: "AIzaSyAXG6lMYjUOsRDKpY718P74PCGJ9Cg0ik4",
-    authDomain: "dbhacktx23.firebaseapp.com",
-    projectId: "dbhacktx23",
-    storageBucket: "dbhacktx23.appspot.com",
-    messagingSenderId: "429684702980",
-    appId: "1:429684702980:web:9d2540488174701db19a51"
-  };
-const app = initializeApp(firebaseConfig);
+// const app = initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
+// const db = getFirestore(app);
 const storage = getStorage(app);
+
+const markerStyle = {
+    width: "40vh",
+    height: "60vh",
+    textAlign: "center", // This centers the text horizontally
+    paddingLeft: '7%'
+};
+
+const ScoreComponent = ({ score, text, imgSrc }) => (
+<div style={{ display: 'flex', marginBottom: '20px', textAlign: 'left' }}>
+    <div style={{ flexShrink: 0, marginRight: '10px', paddingTop: '4%' }}>
+    <img src={imgSrc} alt={`Score ${score}`} style={{ width: '100px', height: 'auto' }} />
+    </div>
+    <div>
+    <h3>Score: {score}/5</h3>
+    <p>{text}</p>
+    </div>
+</div>
+);
+
+const InfoWindowContent = (
+<div style={markerStyle}>
+    <h2 style={{ fontSize: '1.4em', fontWeight: 'normal', margin: '0', paddingTop: 30, paddingBottom: 30 }}>WCP Bathroom - First Floor</h2>
+    <h1 style={{ fontSize: '5em', margin: '0' }}>5/5</h1>
+
+    <img
+                src={toiletImage}
+                alt="WCP bathroom baby"
+                style={{ width: '80%', height: 'auto', paddingTop:30, paddingBottom:20 }} // Adjust width and height as needed
+    />
+
+    {/* Scrollable container */}
+    <div style={{ height: '200px'}}>
+    {/* Score Components */}
+    <ScoreComponent score={4} text="Lorem ipsum dolor sit amet." imgSrc={toiletImage} />
+    <ScoreComponent score={3} text="Consectetur adipiscing elit." imgSrc={toiletImage} />
+    <ScoreComponent score={5} text="Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." imgSrc={toiletImage} />
+    {/* Add more ScoreComponents as needed */}
+    </div>
+</div>
+);
+
 
 
 export default function Review({mode, coords}) {
@@ -66,6 +102,32 @@ export default function Review({mode, coords}) {
         const coordList = db.collection('reviews').get();
         
     }
+    
+
+const [toiletData, setToiletData] = useState(null);
+
+  useEffect(() => {
+    const fetchToiletData = async () => {
+      const db = getFirestore();
+      const toiletDocRef = doc(db, "reviews", "5qGBqJ0hoH1HxWyesWmN");
+
+      try {
+        const docSnapshot = await getDoc(toiletDocRef);
+        if (docSnapshot.exists()) {
+          setToiletData(docSnapshot.data());
+        } else {
+          console.log("No such document!");
+        }
+      } catch (e) {
+        console.error("Error getting document:", e);
+      }
+    };
+
+    fetchToiletData();
+  }, []);
+
+
+
 
     return (
         <div>
@@ -105,10 +167,7 @@ export default function Review({mode, coords}) {
             // if display mode (mode = true) --> will end up using the prop 'coords' to match up data in firestore
             // knowing which info to pass as props to this component? need to match location coords within certain radius
             <div className='currReviews'>
-
-                <h2>TBD</h2>
-                <h3>Quality: TBD</h3>
-                <p>TBD</p>
+                {InfoWindowContent}
             </div>        
             }
         </div>
