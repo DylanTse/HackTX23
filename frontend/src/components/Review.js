@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { initializeApp } from "firebase/app";
 import { firebaseConfig, db, app } from "./firebaseConfig";
-import { getFirestore, collection, addDoc, doc, getDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, doc, getDocs } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, listAll } from 'firebase/storage';
 import {v4} from 'uuid'; 
 import toiletImage from './toilet.jpg';
@@ -104,25 +104,20 @@ export default function Review({mode, coords}) {
 
 const [toiletData, setToiletData] = useState(null);
 
-  useEffect(() => {
+const [documentList, setDocumentList] = useState([]);
+
+    useEffect(() => {
     const fetchToiletData = async () => {
-      const db = getFirestore();
-      const toiletDocRef = doc(db, "reviews", "5qGBqJ0hoH1HxWyesWmN");
-
-      try {
-        const docSnapshot = await getDoc(toiletDocRef);
-        if (docSnapshot.exists()) {
-          setToiletData(docSnapshot.data());
-        } else {
-          console.log("No such document!");
-        }
-      } catch (e) {
-        console.error("Error getting document:", e);
-      }
-    };
-
+            // Retrieve a list of documents
+            const querySnapshot = await getDocs(collection(db, 'reviews'));
+            const documents = [];
+            querySnapshot.forEach((doc) => {
+            documents.push({ id: doc.id, data: doc.data() });
+            });
+            setDocumentList(documents);
+        };
     fetchToiletData();
-  }, []);
+    }, []);
 
 
 
@@ -165,7 +160,15 @@ const [toiletData, setToiletData] = useState(null);
             // if display mode (mode = true) --> will end up using the prop 'coords' to match up data in firestore
             // knowing which info to pass as props to this component? need to match location coords within certain radius
             <div className='currReviews'>
+                {/* {documentList.map((document) => {
+                const documentData = document.data;
+                if (documentData.coords.userLocation == coords) {
+                    return;
+                }  
+                })}
+                <h1>{documentData.review}</h1> */}
                 {InfoWindowContent}
+
             </div>        
             }
         </div>

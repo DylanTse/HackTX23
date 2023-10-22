@@ -9,11 +9,22 @@ import { firebaseConfig, app, db } from "./firebaseConfig";
 // const app = initializeApp(firebaseConfig);
 // const db = getFirestore(app);
 
+const coverStyle = {
+  display: 'flex',
+  justifyContent: 'center', // Center horizontally
+  alignItems: 'center',     // Center vertically
+  width: '100%',
+  height: '100vh',
+  background: 'purple',
+  backgroundImage: `url(${require('./public-toilet-2.jpg')})`,
+  backgroundSize: 'cover',
+};
+
 
 const containerStyle = {
   display: 'flex',
   width: '100%',
-  height: '83vh',
+  height: '88vh',
 };
 
 const markerStyle = {
@@ -25,24 +36,10 @@ const markerStyle = {
 
 const MapComponent = ({ userLocation, handleReviewClick, showReviewWindow }) => {
 
-  const [toiletData, setToiletData] = useState(null);
   const [documentList, setDocumentList] = useState([]);
 
   useEffect(() => {
     const fetchToiletData = async () => {
-      // const db = getFirestore();
-      // const toiletDocRef = doc(db, "reviews", "5qGBqJ0hoH1HxWyesWmN");
-
-      // try {
-      //   const docSnapshot = await getDoc(toiletDocRef);
-      //   if (docSnapshot.exists()) {
-      //     setToiletData(docSnapshot.data());
-      //   } else {
-      //     console.log("No such document!");
-      //   }
-      // } catch (e) {
-      //   console.error("Error getting document:", e);
-      // }
           // Retrieve a list of documents
           const querySnapshot = await getDocs(collection(db, 'reviews'));
           const documents = [];
@@ -84,11 +81,9 @@ const MapComponent = ({ userLocation, handleReviewClick, showReviewWindow }) => 
   
   return (
     <div style={{ display: 'flex' }}>
-      {/* <div class = "sidebarStyle">
-        <h2>Sidebar</h2>
-        <Block onClick={centerMapOnMarker} userLocation={userLocation}/>
+      <div class = "sidebarStyle">
 
-      </div> */}
+      </div>
       <LoadScript googleMapsApiKey="AIzaSyCCaE3R5a3E5V1Wcmh9UBsSbKzFFOxBB74">
         <GoogleMap
           mapContainerStyle={containerStyle}
@@ -96,21 +91,21 @@ const MapComponent = ({ userLocation, handleReviewClick, showReviewWindow }) => 
           zoom={19}
           onLoad={(map) => setMap(map)}
         >
-          <MarkerF
+          {/* <MarkerF
             position={userLocation}
             onClick={() => onMarkerClick(userLocation)}
-          />
+          /> */}
 
-{documentList.map((document) => {
-  const documentData = document.data;
-  return (
-    <MarkerF
-      key={document.id} // Make sure to include a unique key for each element in the list
-      position={documentData.coords.userLocation}
-      onClick={() => onMarkerClick(documentData.coords.userLocation)}
-    />
-  );
-})}
+      {documentList.map((document) => {
+        const documentData = document.data;
+        return (
+          <MarkerF
+            key={document.id} // Make sure to include a unique key for each element in the list
+            position={documentData.coords.userLocation}
+            onClick={() => onMarkerClick(documentData.coords.userLocation)}
+          />
+        );
+      })}
 
           {selectedMarker && (
             <InfoWindowF
@@ -163,15 +158,48 @@ function HomeScreen() {
     setShowReviewWindow(!showReviewWindow);
   };
 
+
+  const scrollToHeader = () => {
+    const header = document.getElementById("header");
+    if (header) {
+      header.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div class="App">
+      <div>
+      <div style={coverStyle}>
+        <div>
+        <h1 style={{ fontSize: '5rem', color: 'white',  textShadow: '4px 4px 8px rgba(0,0,0,0.8)' }}>ROYAL FLUSH</h1>
+          <button 
+            style={{ display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '50px',
+            width: '130px',
+            margin: 'auto',
+            borderRadius: '12px',
+            padding: '12px',
+            fontSize: 'medium',
+            backgroundColor: "white",
+            borderColor: 'white',
+            color: '#f08df0',
+            transitionDuration:'0.4s',
+            fontWeight: 'bold'
+          }} 
+          onClick={scrollToHeader}>Look at Loos</button>
+        </div>
+      </div>
       <div class="navbar">
-        <h1 style={{ display: 'inline-block', marginRight: '10px' }}>ROYAL FLUSH</h1>
-        <button class='ReviewBtn' onClick={handleReviewClick} style={{ position: 'absolute', right: '0', marginTop:'1.5%', marginRight:'2%' }}>New Loo Review</button>  
+      <h1 id="header" style={{ display: 'inline-block', marginRight: '10px' }}>ROYAL FLUSH</h1>
+       <button class='ReviewBtn' onClick={handleReviewClick} style={{ position: 'absolute', right: '0', marginTop:'1.5%', marginRight:'2%' }}>New Loo Review</button>  
+      </div>
       </div>
       <MapComponent userLocation={userLocation} handleReviewClick={handleReviewClick} showReviewWindow={showReviewWindow}/>
     </div>
   );
+
 }
 
 export default HomeScreen;
