@@ -54,8 +54,6 @@ const InfoWindowContent = (
 </div>
 );
 
-
-
 export default function Review({mode, coords}) {
 
     // FORM FIELDS
