@@ -1,7 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { GoogleMap, LoadScript, MarkerF, InfoWindowF } from '@react-google-maps/api';
-import { collection, addDoc } from "firebase/firestore";
-import {db} from '../firebase';
+import { getFirestore, collection } from 'firebase/firestore';
+import { initializeApp } from "firebase/app";
+import Review from './Review';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAXG6lMYjUOsRDKpY718P74PCGJ9Cg0ik4",
+  authDomain: "dbhacktx23.firebaseapp.com",
+  projectId: "dbhacktx23",
+  storageBucket: "dbhacktx23.appspot.com",
+  messagingSenderId: "429684702980",
+  appId: "1:429684702980:web:9d2540488174701db19a51"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 
 const containerStyle = {
   display: 'flex',
@@ -10,8 +23,8 @@ const containerStyle = {
 };
 
 const markerStyle = {
-  width: "40vh",
-  height: "60vh"
+  width: "45vh",
+  height: "70vh"
 };
 
 
@@ -30,6 +43,7 @@ const MapComponent = ({ userLocation, handleReviewClick, showReviewWindow }) => 
   };
 
   const Block = ({ onClick, userLocation }) => {
+
     const handleClick = () => {
       // Assuming you have a specific position for this block
       const blockPosition = { lat: 30.2850, lng: -97.7335 };
@@ -54,7 +68,7 @@ const MapComponent = ({ userLocation, handleReviewClick, showReviewWindow }) => 
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={userLocation}
-          zoom={20}
+          zoom={19}
           onLoad={(map) => setMap(map)}
         >
           <MarkerF
@@ -68,8 +82,8 @@ const MapComponent = ({ userLocation, handleReviewClick, showReviewWindow }) => 
               onCloseClick={() => setSelectedMarker(null)}
             >
             <div style={markerStyle}>
-              <h3>Marker Info</h3>
-              <p>Additional information about the marker.</p>
+              {/* DISPLAY COMPONENT REVIEW --> UPLOAD STATUS = false --> DISPLAY DATA ABOUT EXISTING RESTROOM ( we are using conditional rendering with props) */}
+              < Review mode={false} coords={{userLocation}}/>
             </div>
             </InfoWindowF>
           )}
@@ -79,11 +93,8 @@ const MapComponent = ({ userLocation, handleReviewClick, showReviewWindow }) => 
               onCloseClick={() => handleReviewClick()}
             >
               <div style={markerStyle}>
-                <h2>New Loo</h2>
-                <input className="input" type="text"
-                  placeholder="Location"
-                />
-
+                {/* DISPLAY COMPONENT REVIEW --> UPLOAD STATUS = true --> FORM TO SEND DATA TO FIREBASE + STORAGE */}
+                < Review mode={true} coords={{userLocation}}/> 
               </div>
             </InfoWindowF>
           )}
@@ -93,6 +104,7 @@ const MapComponent = ({ userLocation, handleReviewClick, showReviewWindow }) => 
     </div>
   );
 };
+
 
 function HomeScreen() {
   const [userLocation, setUserLocation] = useState({ lat: 0, lng: 0 });

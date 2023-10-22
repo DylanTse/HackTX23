@@ -9,6 +9,16 @@
     padding-bottom: 1%
 }
 
+.input{
+    width: 100%;
+    padding: 5px 5px;
+    margin: 8px 0px;
+    box-sizing: border-box;
+    display: inline-block;
+    border-color: rgb(162, 107, 162);
+}
+
+
 .ReviewBtn {
     border-color: #e070e0;
     color: black;
@@ -22,6 +32,7 @@
     color: white;
     padding-left: 1.5%;
     padding-right: 1.5%;
+    cursor: pointer;
 }
 
 .sidebarStyle {
