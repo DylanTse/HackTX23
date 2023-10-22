@@ -9,11 +9,22 @@ const containerStyle = {
   height: '83vh',
 };
 
+const coverStyle = {
+  display: 'flex',
+  justifyContent: 'center', // Center horizontally
+  alignItems: 'center',     // Center vertically
+  width: '100%',
+  height: '100vh',
+  background: 'purple',
+  backgroundImage: `url("https://images.prestigeonline.com/wp-content/uploads/sites/6/2023/07/13134104/taylor-swift-jewellery-e1688735010934.jpeg")`,
+  backgroundSize: 'cover',
+};
+
+
 const markerStyle = {
   width: "40vh",
   height: "60vh"
 };
-
 
 const MapComponent = ({ userLocation, handleReviewClick, showReviewWindow }) => {
   const [selectedMarker, setSelectedMarker] = useState(null);
@@ -114,10 +125,24 @@ function HomeScreen() {
     setShowReviewWindow(!showReviewWindow);
   };
 
+  const scrollToHeader = () => {
+    const header = document.getElementById("header");
+    if (header) {
+      header.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div class="App">
       <div class="navbar">
-        <h1>ROYAL FLUSH</h1>
+      <div style={coverStyle}>
+        <div class="header-container">
+        <h1 style={{ fontSize: '5rem', color: 'white' }}>ROYAL FLUSH</h1>
+          <button class='ScrollBtn' onClick={scrollToHeader}>Look at loos</button>
+        </div>
+      </div>
+        <div id="header"><h1>ROYAL FLUSH</h1></div>
+        
         <button class='ReviewBtn' onClick={handleReviewClick}>New Loo Review</button>  
       </div>
       <MapComponent userLocation={userLocation} handleReviewClick={handleReviewClick} showReviewWindow={showReviewWindow}/>
