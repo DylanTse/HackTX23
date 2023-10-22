@@ -84,7 +84,7 @@ const MapComponent = ({ userLocation, handleReviewClick, showReviewWindow }) => 
       <div class = "sidebarStyle">
 
       </div>
-      <LoadScript googleMapsApiKey="AIzaSyCCaE3R5a3E5V1Wcmh9UBsSbKzFFOxBB74">
+      <LoadScript googleMapsApiKey="api key goes here">
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={userLocation}
