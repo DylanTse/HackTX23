@@ -6,7 +6,8 @@
 .navbar {
     margin: 0;
     padding-left: 2%;
-    padding-bottom: 1%
+    padding-bottom: 1%;
+    background-color: #f9f2fc;
 }
 
 .input{
@@ -36,10 +37,7 @@
 }
 
 .sidebarStyle {
-    width: 25%; 
-    height: 83vh;
-    overflow-y: auto; 
-    padding-left: 50px;
+    padding-left: 0px;
 } 
   
 .blockStyle {
